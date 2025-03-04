@@ -1,5 +1,7 @@
 @import "tailwindcss";
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @theme {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -21,4 +23,63 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.MuiAppBar-colorPrimary {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #cecece !important;
+  box-shadow: none !important;
+}
+
+.MuiList-padding {
+  margin: 0px 7px !important;
+  a {
+    /* padding: 0 5px !important;
+    margin: 0 14px !important; */
+    margin-top: 2px !important;
+    div {
+      border-radius: 7px !important;
+    }
+  }
+}
+.openedMainTitel {
+  height: 20;
+  opacity: 1;
+  transition: 0.4s;
+  margin-left: 22px;
+  padding-top: 8px;
+  font-size: 14px;
+  color: #555;
+}
+.closedMainTitel {
+  height: 0;
+  opacity: 0;
+  transition: 0.4s;
+  margin-left: 22px;
+  padding-top: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.mainOpened {
+  padding: 8px 20px;
+  min-width: calc(100vw - 365px);
+}
+.mainClosed {
+  padding: 8px 20px;
+  min-width: calc(100vw - 80px);
+}
+.MuiCard-root {
+  max-width: 450px !important;
+}
+/* .MuiDrawer-paper {
+  background: url("/bg1.jpg") !important;
+} */
+body {
+  overflow-x: hidden;
+  /* width: 95%;
+  max-width: 95%; */
+}
+.box-parent {
+  max-width: 1200px;
 }
