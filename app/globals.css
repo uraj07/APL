@@ -83,3 +83,15 @@ body {
 .box-parent {
   max-width: 1200px;
 }
+tr {
+  border-color: rgb(229, 231, 235) !important;
+  a,
+  button {
+    border-color: rgb(229, 231, 235) !important;
+  }
+}
+.invoice-page {
+  a {
+    border-color: #e5e7eb !important;
+  }
+}

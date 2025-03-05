@@ -30,7 +30,9 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MailIcon from "@mui/icons-material/Mail";
-import DashboardIcon from "@mui/icons-material/SpaceDashboard";
+// import DashboardIcon from "@mui/icons-material/SpaceDashboard";
+import DashboardIcon from "@mui/icons-material/SpaceDashboardOutlined";
+import InvoiceIcon from "@mui/icons-material/FileCopyOutlined";
 import Link from "next/link";
 import Image from "next/image";
 import DeviceIcon from "@mui/icons-material/Phonelink";
@@ -42,6 +44,7 @@ import { Suspense } from "react";
 
 const links = [
   { name: "Dashboard", href: "/dashboard", icon: DashboardIcon },
+  { name: "Invoices", href: "/dashboard/invoices", icon: InvoiceIcon },
   {
     name: "Products",
     href: "/dashboard/products",
@@ -124,17 +127,30 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Layout({ children }) {
+  const [wait, setWait] = React.useState(false);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    if (window.innerWidth >= 640) setOpen(true);
+    else setOpen(false);
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const onLinkClicked = () => {
+    setWait(true);
+    if (window.innerWidth >= 640) setOpen(true);
+    else setOpen(false);
+    setTimeout(() => {
+      setWait(false);
+    }, 300);
+  };
   const pathname = usePathname();
+  React.useEffect(() => {
+    if (window.innerWidth <= 640) setOpen(false);
+  }, []);
   return (
     <>
       <Box style={{ display: "flex" }} className="max-w-[1200px]">
@@ -192,7 +208,11 @@ export default function Layout({ children }) {
             </AppBar>
           </div>
         </div>
-        <Drawer variant="permanent" open={open}>
+        <Drawer
+          variant="permanent"
+          open={open}
+          // className="sm:w-64 sm:block hidden"
+        >
           <DrawerHeader></DrawerHeader>
           {/* <Divider /> */}
           <div className={open ? "openedMainTitel" : "closedMainTitel"}>
@@ -211,9 +231,10 @@ export default function Layout({ children }) {
                     "flex h-[48px] grow items-center text-gray-500 justify-flex-start gap-2 rounded-md  p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-900 md:flex-none md:justify-start md:p-2 md:px-3",
                     {
                       "bg-sky-100 [&&]:text-blue-900": pathname === link.href,
-                    }
+                    },
+                    { "cursor-wait": wait }
                   )}
-                  onClick={handleDrawerOpen}
+                  onClick={onLinkClicked}
                 >
                   <LinkIcon
                     className="w-6"
@@ -315,10 +336,11 @@ export default function Layout({ children }) {
         <Box
           component="main"
           sx={{ flexGrow: 1, p: 1 }}
-          className={open ? "mainOpened" : "mainClosed"}
+          className={
+            open ? "mainOpened ml-0 lg:ml-5" : "mainClosed ml-0 lg:ml-5"
+          }
         >
           <DrawerHeader />
-
           {children}
         </Box>
       </Box>
